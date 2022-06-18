@@ -49,7 +49,7 @@ uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8080
 ### Form action
 Point your form `action` to `../api/submit/your@email.com` like:
 ```html
-form action="https://yourdomain.com/api/submit/your@email.com" method="POST"
+<form action="https://yourdomain.com/api/submit/your@email.com" method="POST">
 ```
 
 
