@@ -21,7 +21,7 @@ Implementation on the frontend is as simple as:
 1. Check if the domain of the sending email and webbsite are the same
 2. Submit if the domains are the same, otherwise fail the submission
 
-It's as simple as this.
+It's as simple as that.
 
 
 ## How to run it
