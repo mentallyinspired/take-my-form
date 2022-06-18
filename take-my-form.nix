@@ -4,12 +4,18 @@
 
 pkgs.dockerTools.buildImage {
   name = "take-my-form";
+  tag = lates;
+  runAsRoot = ''
+    mkdir /code
+    cp ./requirements.txt /code/requirements.txt
+    pip install --no-cache-dir --upgrade -r /code/requirements.txt
+    cp ./app /code/app
+  '';
+
+
   config = {
-    FROM = "python:3.9";
+    FROM = "python:3.10";
     WORKDIR = "/code";
-    COPY = "./requirements.txt /code/requirements.txt";
-    RUN = "pip install --no-cache-dir --upgrade -r /code/requirements.txt";
-    COPY = "./app /code/app";
-    Cmd = [ "uvicorn" "app.main:app" "--proxy-headers" "--host" "0.0.0.0" "--port" "80" ];
+    Cmd = [ "uvicorn app.main:app --proxy-headers --host 0.0.0.0 --port 8095" ];
   };
 }

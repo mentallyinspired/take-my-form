@@ -26,27 +26,20 @@ It's as simple as that.
 
 ## How to run it
 Take My Form is currently in beta (it works as intended).
-Run it in python venv with uvicorn. Dockerfile isn't done yet.
+Build the docker container and run it
 
 ### Config
 Add your SMTP config to the `config.ini` file
 
-### The simple (not recomended, only for testing)
+### Build docker container
 ```bash
-pip install "uvicorn[standard]"
-uvicorn main:app --host 0.0.0.0 --port 80
+$ docker build -t take-my-form .
 ```
 
-### The proper way (with reverse proxy)
-Get yourself a reverse proxy, like nginx or traefik.
-Set it up to point to your chosen port (8080 in this instance).
-
-```bash
-pip install "uvicorn[standard]"
-uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8080
+### Run it
 ```
-
-`--proxy-headers` will tell uvicorn to trust the headers sent by your reverse proxy
+$ docker run -d --name take-my-form -p 80:80 take-my-form
+```
 
 ### Form action
 Point your form `action` to `../api/submit/your@email.com` like:
