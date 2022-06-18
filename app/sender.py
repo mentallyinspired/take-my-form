@@ -1,4 +1,3 @@
-from multiprocessing import context
 import smtplib, ssl, os
 from email.message import EmailMessage
 import configparser

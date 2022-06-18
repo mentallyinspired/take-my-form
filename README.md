@@ -3,6 +3,8 @@
 Take My Form is a easy to implement endpoint for your HTML forms.
 Perfect for your static/jamstack sites.
 
+It uses FastAPI, smtplib and EmailMessage to take care of everything
+
 Implementation on the frontend is as simple as:
 ```html
 <form action="https://yourdomain.com/api/submit/your@email.com" method="POST">
