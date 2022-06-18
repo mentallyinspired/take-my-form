@@ -26,10 +26,16 @@ It's as simple as that.
 
 ## How to run it
 Take My Form is currently in beta (it works as intended).
-Build the docker container and run it
+
+1. Clone this git repo
+2. Adjust the config
+2. Build container
+3. Run the container
 
 ### Config
 Add your SMTP config to the `config.ini` file
+The config will go inside the container for now
+DO NOT SHARE THE IMAGE: as the image will container your smtp info
 
 ### Build docker container
 ```bash
@@ -37,8 +43,13 @@ $ docker build -t take-my-form .
 ```
 
 ### Run it
+**docker**
 ```
 $ docker run -d --name take-my-form -p 80:80 take-my-form
+```
+**docker-compose**
+```
+$ docker-compose up -d
 ```
 
 ### Form action
