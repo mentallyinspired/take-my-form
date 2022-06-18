@@ -15,16 +15,19 @@ Implementation on the frontend is as simple as:
 ```
 
 ## How it works
-When the form submits to the server it checks origin URL and does a manual CORS validation by comparing the sending email address with the domain of the webbsite.
-If the domain of the sending email and webbsite domain are not the same the submission will fail.
-If they are the same it will send the email.
+**On submission**
+1. Check if the domain of the sending email and webbsite are the same
+2. Submit if the domains are the same, otherwise fail the submission
 
 It's as simple as this.
 
 
 ## How to run it
-Take My Form is currently in beta (it works).
-Create a docker image out of it, or run it in python venv with:
+Take My Form is currently in beta (it works as intended).
+Create a docker image out of it, or run it in python venv with uvicorn.
+
+### Config
+Add your SMTP config to the `config.ini` file
 
 ### The simple (not recomended, only for testing)
 ```bash
@@ -34,7 +37,7 @@ uvicorn main:app --host 0.0.0.0 --port 80
 
 ### The proper way (with reverse proxy)
 Get yourself a reverse proxy, like nginx or traefik.
-Set it up to point to your chosen port, here we have chosen 8080.
+Set it up to point to your chosen port (8080 in this instance).
 
 ```bash
 pip install "uvicorn[standard]"
@@ -43,6 +46,11 @@ uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8080
 
 `--proxy-headers` will tell uvicorn to trust the headers sent by your reverse proxy
 
+### Form action
+Point your form `action` to `../api/submit/your@email.com` like:
+```html
+form action="https://yourdomain.com/api/submit/your@email.com" method="POST"
+```
 
 
 
