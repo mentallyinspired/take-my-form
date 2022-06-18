@@ -26,7 +26,7 @@ It's as simple as that.
 
 ## How to run it
 Take My Form is currently in beta (it works as intended).
-Create a docker image out of it, or run it in python venv with uvicorn.
+Run it in python venv with uvicorn. Dockerfile isn't done yet.
 
 ### Config
 Add your SMTP config to the `config.ini` file
