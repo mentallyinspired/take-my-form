@@ -2,7 +2,7 @@
 version: "2.1"
 services:
   take-my-form:
-    image: .take-my-form
+    image: take-my-form
     container_name: take-my-form
     ports:
       - 80:80
