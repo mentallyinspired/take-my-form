@@ -38,10 +38,3 @@ class Sender():
         with smtplib.SMTP_SSL(self.MAIL_SERVER, self.PORT, context=context) as s:
             s.login(self.FROM_ADDRESS, self.PASSWORD)
             s.send_message(msg)
-            
-            
-
-if __name__ == "__main__":
-    # We don't want to automate this test, so we don't spam outselves
-    s = Sender()
-    s.send_mail("john@doe", "John Doe", "mail@mailer", "Consider supporting this project (Take-My-Form", "TEST")

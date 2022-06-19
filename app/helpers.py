@@ -1,4 +1,4 @@
-import re
+import re, json, os, configparser
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -14,7 +14,16 @@ def check_origin(origin: str, to_email: str):
         return False
     parts = to_email.split("@")
     domain = parts[1]
-    if origin in domain:
+    if domain in origin:
         return True
     else:
         return False
+    
+
+def get_allowed_origins():
+    config = configparser.ConfigParser()
+    config_file = os.path.join(os.path.dirname(__file__), "config.ini")
+    config.read(config_file)
+    urls = config['SMTP']['ALLOWED_URLS']
+    allowed_urls = json.loads(urls)
+    return allowed_urls
