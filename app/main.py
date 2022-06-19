@@ -9,6 +9,10 @@ app = FastAPI()
 
 ALLOWED_URLS = get_allowed_origins()
 
+# @app.get("/")
+# async def root():
+#     return("https://github.com/mentallyinspired/take-my-form")
+
 @app.post("/api/submit/{to_mail}")
 async def submit(
     to_mail: str,
@@ -18,6 +22,22 @@ async def submit(
     email: str = Form(),
     message: str = Form()
     ):
+    """Handle form submissions
+
+    Args:
+        to_mail (str): Email to which form data is to be sent
+        request (Request): _description_
+        name (str, optional): Form submitters name
+        subject (str, optional): Subject of the form
+        email (str, optional): Form subtimmers email
+        message (str, optional): Form submitters message
+
+    Raises:
+        HTTPException: Invalid origin domain
+        HTTPException: Invalid form email
+        HTTPException: Invalid target email
+        HTTPException: Mail client error
+    """
     
     # Check that the origin domain is in our list
     if not check_origin(request.headers.get("origin"), ALLOWED_URLS):

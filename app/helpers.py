@@ -36,7 +36,12 @@ def check_origin(origin_url: str, ALLOWED_URLS: list) -> bool:
         return True
     
 
-def get_allowed_origins():
+def get_allowed_origins() -> list:
+    """Read from config and return a list of allowed domains.
+
+    Returns:
+        list: List of allowed items
+    """
     config = configparser.ConfigParser()
     config_file = os.path.join(os.path.dirname(__file__), "config", "config.ini")
     config.read(config_file)
@@ -46,6 +51,8 @@ def get_allowed_origins():
 
 
 def create_config_file():
+    """Check for config.ini in config dir, copy it over if it isn't there.
+    """
     if not os.path.exists(os.path.join(os.path.dirname(__file__), "config", "config.ini")):
         original = os.path.join(os.path.dirname(__file__), "config.ini")
         target = os.path.join(os.path.dirname(__file__), "config", "config.ini")
