@@ -28,6 +28,8 @@ services:
     image: take-my-form
     container_name: take-my-form
     restart: unless-stopped
+    volumes:
+      - </path/to/config>:/code/app/config
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.take-my-form.rule=Host(`take-my-form.example.com`)"

@@ -5,7 +5,7 @@ import configparser
 class Sender():
     def __init__(self) -> None:
         config = configparser.ConfigParser()
-        config_file = os.path.join(os.path.dirname(__file__), "config.ini")
+        config_file = os.path.join(os.path.dirname(__file__), "config", "config.ini")
         config.read(config_file)
 
         self.MAIL_SERVER = config['SMTP']['MAIL_SERVER']
