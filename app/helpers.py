@@ -14,6 +14,9 @@ def check_origin(origin: str, to_email: str):
         return False
     parts = to_email.split("@")
     domain = parts[1]
+    if "." in origin:
+        origin_parts = origin.split(".")
+        origin = origin_parts[1]
     if origin == domain:
         return True
     else:
