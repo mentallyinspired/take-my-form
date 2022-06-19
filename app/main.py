@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Form, Request, HTTPException
 from app.helpers import check_email, check_origin, get_allowed_origins
 from app.sender import Sender
-import configparser, os, json
 
 app = FastAPI()
 
@@ -18,27 +17,21 @@ async def submit(
     message: str = Form()
     ):
     
-    # Check that the origin domain is the same as the domain for the mail
-    try:
-        origin_url = request.headers['origin']
-        
-    except:
-        origin_url = "https://invalid.invalid"
-    
-    if not origin_url in ALLOWED_URLS:
-        raise HTTPException(status_code=400, detail=f"Invalid origin domain: {origin_url}")
-    
+    # Check that the origin domain is in our list
+    if not check_origin(request.headers.get("origin"), ALLOWED_URLS):
+        raise HTTPException(status_code=400, detail="Invalid origin domain")
+
+
     if not check_email(email):
-        raise HTTPException(status_code=400, detail=f"invalid form email: {email}")
+        raise HTTPException(status_code=400, detail="Invalid form email")
+    if not check_email(to_mail):
+        raise HTTPException(status_code=400, detail="Invalid target email")
     
-    if check_origin(origin_url, to_mail):
-        try:
-            sender = Sender()
-            sender.send_mail(to_email=to_mail, name=name, email=email, message=message, subject=subject)
-            return("success")
-        except:
-            raise HTTPException(status_code=400, detail="Mail client error")
-        
-    else:
-        raise HTTPException(status_code=400, detail=f"Invalid target email")
+
+    try:
+        sender = Sender()
+        sender.send_mail(to_email=to_mail, name=name, email=email, message=message, subject=subject)
+        return("success")
+    except:
+        raise HTTPException(status_code=400, detail="Mail client error")
     

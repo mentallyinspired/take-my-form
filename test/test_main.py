@@ -21,26 +21,36 @@ form_bad = {
 
 def test_submit_good():
     response = client.post(
-        "http://domain.com/api/submit/name@domain.com",
-        data=form)
-    assert response.status_code == 200
-    
-
-def test_submit_wrong_domain():
-    response = client.post(
-        "http://domainer.com/api/submit/name@domain.com",
+        "https://test.test/api/submit/name@testmail.com",
+        headers={"origin": "https://your.domain"},
         data=form)
     assert response.status_code == 400
+    ## Sucess if we reach "Mail client error"
+    assert response.json() == {"detail": "Mail client error"}
+    
+    
+
+def test_submit_wrong_origin():
+    response = client.post(
+        "https://test.test/api/submit/name@testmail.com",
+        headers={"origin": "https://another.domain"},
+        data=form)
+    assert response.status_code == 400
+    assert response.json() == {"detail": "Invalid origin domain"}
     
     
 def test_submit_wrong_mail():
     response = client.post(
-        "http://domain.com/api/submit/name@domainer.com",
+        "https://test.test/api/submit/name@testmail",
+        headers={"origin": "https://your.domain"},
         data=form)
     assert response.status_code == 400
+    assert response.json() == {"detail": "Invalid target email"}
 
 def test_submit_incorect_form_email():
     response = client.post(
-        "http://domain.com/api/submit/name@domain.com",
+        "https://test.test/api/submit/name@testmail.com",
+        headers={"origin": "https://your.domain"},
         data=form_bad)
     assert response.status_code == 400
+    assert response.json() == {"detail": "Invalid form email"}

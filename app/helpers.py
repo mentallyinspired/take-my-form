@@ -1,23 +1,40 @@
 import re, json, os, configparser
+from fastapi import Request, HTTPException
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 def check_email(email: str) -> bool:
+    """Check if email is valid
+
+    Args:
+        email (str): email address
+
+    Returns:
+        bool: True if valid, false otherwise
+    """
     if(re.fullmatch(email_regex, email)):
         return True
     else:
         return False
     
 
-def check_origin(origin: str, to_email: str):
-    if not check_email(to_email):
+def check_origin(origin_url: str, ALLOWED_URLS: list) -> bool:
+    """Check that the origin domain is in our list
+
+    Args:
+        request (Request): HTTP request, for origin url
+        ALLOWED_URLS (list): List of allowed urls
+
+    Returns:
+        bool: True if origin url in list, otherwise False
+    """
+    if origin_url == None:
+        origin_url = "https://invalid.invalid"
+    
+    if not origin_url in ALLOWED_URLS:
         return False
-    parts = to_email.split("@")
-    domain = parts[1]
-    if domain in origin:
-        return True
     else:
-        return False
+        return True
     
 
 def get_allowed_origins():
