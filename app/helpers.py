@@ -1,4 +1,4 @@
-import re, json, os, configparser
+import re, json, os, configparser, shutil
 
 email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -43,3 +43,10 @@ def get_allowed_origins():
     urls = config['SMTP']['ALLOWED_URLS']
     allowed_urls = json.loads(urls)
     return allowed_urls
+
+
+def create_config_file():
+    if not os.path.exists(os.path.join(os.path.dirname(__file__), "config", "config.ini")):
+        original = os.path.join(os.path.dirname(__file__), "config.ini")
+        target = os.path.join(os.path.dirname(__file__), "config", "config.ini")
+        shutil.copyfile(original, target)

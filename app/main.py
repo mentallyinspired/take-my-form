@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Form, Request, HTTPException
-from app.helpers import check_email, check_origin, get_allowed_origins
+from app.helpers import check_email, check_origin, get_allowed_origins, create_config_file
 from app.sender import Sender
+
+create_config_file()
 
 app = FastAPI()
 
