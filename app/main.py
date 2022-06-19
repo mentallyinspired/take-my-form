@@ -19,7 +19,11 @@ async def submit(
     ):
     
     # Check that the origin domain is the same as the domain for the mail
-    origin_url = request.headers['origin']
+    try:
+        origin_url = request.headers['origin']
+        
+    except:
+        origin_url = "https://invalid.invalid"
     
     if not origin_url in ALLOWED_URLS:
         raise HTTPException(status_code=400, detail=f"Invalid origin domain: {origin_url}")
