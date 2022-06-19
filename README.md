@@ -3,7 +3,7 @@
 Take My Form is a easy to implement endpoint for your HTML forms.
 Perfect for your static/jamstack sites.
 
-It uses FastAPI, smtplib and EmailMessage to take care of everything
+It uses FastAPI, smtplib and EmailMessage to take care of everything.
 
 Implementation on the frontend is as simple as:
 ```html
@@ -18,8 +18,8 @@ Implementation on the frontend is as simple as:
 
 ## How it works
 **On submission**
-1. Check if the domain of the sending email and webbsite are the same
-2. Submit if the domains are the same, otherwise fail the submission
+1. Check if the domain is in the allowed origin list
+2. Submit if origin (website) domain is in the list
 
 It's as simple as that.
 
@@ -28,27 +28,33 @@ It's as simple as that.
 Take My Form is currently in beta (it works as intended).
 
 1. Clone this git repo
-2. Adjust the config
 2. Build container
-3. Run the container
+3. Create config
+4. Adjust the config
+5. Restart container
 
-### Config
-Add your SMTP config to the `config.ini` file
-The config will go inside the container for now
-DO NOT SHARE THE IMAGE: as the image will container your smtp info
+### Clone the repo
+```bash
+git clone https://github.com/mentallyinspired/take-my-form.git
+cd take-my-form
+```
 
 ### Build docker container
 ```bash
-$ docker build -t take-my-form .
+sudo docker build -t take-my-form .
 ```
 
-### Run it
+### Create the config
 **docker**
+```bash
+sudo docker compose up -d && sudo docker compose down
 ```
-$ docker run -d --name take-my-form -p 80:80 take-my-form
-```
-**docker-compose**
-```
+
+### Config
+Edit the config in the mapped docker volume
+
+### Run it
+```bash
 $ docker-compose up -d
 ```
 
@@ -62,9 +68,9 @@ Point your form `action` to `../api/submit/your@email.com` like:
 
 
 ## TODO
-- [ ] Build docker container
-- [ ] Docker-compose file with reverse proxy
-- [ ] Implement static CORS
+- [x] Build working docker container
+- [x] Docker-compose file with reverse proxy
+- [x] Implement static CORS
 - [ ] Implement validation process for sending emails
     - This will allow the server make use of emails with different domain to the website the form is in
 - [ ] Probably more
