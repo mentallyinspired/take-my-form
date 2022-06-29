@@ -11,7 +11,8 @@ Implementation on the frontend is as simple as:
      <input type="text" name="name" required>
      <input type="text" name="subject" required>
      <input type="email" name="email" required>
-     <input type="email" name="message" required>
+     <input type="textfield" name="message" required>
+     <textarea name="message" rows="4" cols="50">
      <button type="submit">Submit</button>
 </form> 
 ```
